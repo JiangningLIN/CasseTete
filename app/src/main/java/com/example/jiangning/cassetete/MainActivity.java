@@ -33,9 +33,6 @@ public class MainActivity extends Activity {
     private MyCount mc3;
     public static long timer=0 ;
 
-    public static long timer1=0 ;
-
-    public static long timer2=0 ;
     //butto home
     private static final String TAG = "KeyDown";
     private Context context;
@@ -123,7 +120,7 @@ public class MainActivity extends Activity {
        b0.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 //evite la premier fois gagner pour timerWinStop egale true toujours et timer ne change pas
-                timerStop = false;
+                timerStop  = false;
                 timerStop1 = false;
                 timerStop2 = false;
                 timerStop3 = false;
@@ -141,8 +138,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
 
                 //evite la premier fois gagner pour timerWinStop egale true toujours et timer ne change pas
-                //timerWinStop1 = false;
-                timerStop = false;
+                timerStop  = false;
                 timerStop1 = false;
                 timerStop2 = false;
                 timerStop3 = false;
@@ -161,8 +157,7 @@ public class MainActivity extends Activity {
             public void onClick(View v) {
 
                 //evite la premier fois gagner pour timerWinStop egale true toujours et timer ne change pas
-                //timerWinStop2 = false;
-                timerStop = false;
+                timerStop  = false;
                 timerStop1 = false;
                 timerStop2 = false;
                 timerStop3 = false;
@@ -181,7 +176,7 @@ public class MainActivity extends Activity {
 
                 //evite la premier fois gagner pour timerWinStop egale true toujours et timer ne change pas
                // timerWinStop3 = false;
-                timerStop = false;
+                timerStop  = false;
                 timerStop1 = false;
                 timerStop2 = false;
                 timerStop3 = false;
@@ -218,7 +213,7 @@ public class MainActivity extends Activity {
         /*Callback fired on regular interval.*/
         @Override
         public void onTick(long millisUntilFinished) {
-            if(timerStop == true || timerStop1 == true || timerStop2 == true || timerStop3 == true){
+            if(timerStop || timerStop1  || timerStop2  || timerStop3 ){
                 cancel(); /*Cancel the countdown*/
             }
 
