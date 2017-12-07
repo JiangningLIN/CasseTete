@@ -20,6 +20,7 @@ import java.util.Random;
 import static com.example.jiangning.cassetete.MainActivity.timer;
 import static com.example.jiangning.cassetete.MainActivity.musicLoop;
 import static com.example.jiangning.cassetete.MainActivity.playing;
+import static com.example.jiangning.cassetete.MainActivity.hitTmp;
 
 /**
  * Created by Jiangning on 20/11/2017.
@@ -646,8 +647,12 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
                 hit++;
             }
         }
-        if (isWon())
+        //si gagne, MotionEvant.Action_UP ca marche pas dans le jeu
+        if (isWon()){
             hit ++;
+            hitTmp = hit;
+        }
+
 
         return true;
 
@@ -660,8 +665,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
             Log.i("test", "HIIIIIIIIIII");
             timerStop = true;
             //pour le music
-            if(playing)
-                musicLoop = true;
+            if(playing){musicLoop = true;}
             //retourne le Menu
             Intent intent = new Intent(getContext(), MainActivity.class);
             /*his clears the activity stack and opens your main activity*/

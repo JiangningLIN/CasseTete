@@ -49,6 +49,11 @@ public class MainActivity extends Activity {
     private Random random = new Random();
     private int valueRandom;
 
+    //scores
+    public static int hitTmp = 0;
+    public int totalScore    = 2000;
+    public static int bestScore =0;
+    boolean firstScore = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +104,13 @@ public class MainActivity extends Activity {
             }
         });
 
+        //click button best Best Score
+        bs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialogBestScore();
+            }
+        });
         //click button Random Game
         b.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,6 +157,8 @@ public class MainActivity extends Activity {
                 showDialogExit();
             }
         });
+
+        //getBestScores();
 
 
     }
@@ -265,13 +279,11 @@ public class MainActivity extends Activity {
                             dialog.dismiss();
                             mediaPlayer.start();
                             play = false;
-                            Log.i("playing","true!!!!!");
                         }else if(pause){
                             playing = false;
                             dialog.dismiss();
                             mediaPlayer.pause();
                             pause = false;
-                            Log.i("playing","false!!!!!");
                         }
                     }
                 });
@@ -288,6 +300,25 @@ public class MainActivity extends Activity {
         builder.setMessage("\t\t\t\t\t\tCASSE TETE 0.0.0\n\n"+
                 "\t\tJiangning Lin, Ruddy Stephenson\n"+
                 "\t\t\t\t\t\t\t\t 08.12.2017");
+        builder.setPositiveButton("Close",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Dismisses the dialog
+                        dialog.dismiss();
+                    }
+                });
+        //show the dialog
+        builder.create().show();
+    }
+
+    //Dialog à propose
+    protected void showDialogBestScore() {
+        //Creates an alert dialog that uses the default alert dialog theme
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Best Scores");
+        builder.setIcon(R.drawable.about);
+        String str = "" + bestScore;
+        builder.setMessage("\t\t\t\t\t\tBest Scores: "+str);
         builder.setPositiveButton("Close",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -323,6 +354,13 @@ public class MainActivity extends Activity {
         //show the dialog
         builder.create().show();
     }
+    //compare les scores
+    public int getBestScores(){
+        int scoretmp = totalScore - hitTmp*20;
+          if (scoretmp > bestScore && hitTmp != 0)
+              bestScore = scoretmp;
+        return bestScore;
+    }
 
     //pour commencer les temps
     public void timerStarts(){
@@ -346,6 +384,8 @@ public class MainActivity extends Activity {
             mediaPlayer.release();
             mediaPlayer = null;
         }
+        //sauvegarde de bestScore
+        bestScore = getBestScores();
         super.onPause();
     }
     @Override
@@ -356,7 +396,6 @@ public class MainActivity extends Activity {
             mediaPlayer.start();
             musicLoop = false;
         }
-
         super.onResume();  // Always call the superclass method first
     }
 

@@ -20,6 +20,7 @@ import java.util.Random;
 import static com.example.jiangning.cassetete.MainActivity.timer;
 import static com.example.jiangning.cassetete.MainActivity.musicLoop;
 import static com.example.jiangning.cassetete.MainActivity.playing;
+import static com.example.jiangning.cassetete.MainActivity.hitTmp;
 
 /**
  * Created by Jiangning on 20/11/2017.
@@ -764,8 +765,11 @@ public class GameView1 extends SurfaceView implements SurfaceHolder.Callback, Ru
             }
         }
 
-        if (isWon())
+        //si gagne, MotionEvant.Action_UP ca marche pas dans le jeu
+        if (isWon()){
             hit ++;
+            hitTmp = hit;
+        }
 
         return true;
 
