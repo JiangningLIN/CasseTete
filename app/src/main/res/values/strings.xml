@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Casse Tete</string>
+    <string name="Playing">Playing</string>
+    <string name="Pause">Pause</string>
 </resources>

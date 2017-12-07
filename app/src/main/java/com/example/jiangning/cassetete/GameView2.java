@@ -18,6 +18,8 @@ import android.view.SurfaceView;
 import java.util.Random;
 
 import static com.example.jiangning.cassetete.MainActivity.timer;
+import static com.example.jiangning.cassetete.MainActivity.musicLoop;
+import static com.example.jiangning.cassetete.MainActivity.playing;
 
 /**
  * Created by Jiangning on 20/11/2017.
@@ -826,8 +828,7 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, Ru
 
     //met à jour la postion des block1s
     private void UpdateBlock1s(int x, int y, int new_x, int new_y) {
-        int dif_x=0;
-        int dif_y=0;
+        int dif_x, dif_y;
         for (int i = 0; i < block_1s.length; i++) {
 
             dif_x = block_1s[i][0] - x;
@@ -841,8 +842,7 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, Ru
 
     //met à jour la postion des block2s
     private void UpdateBlock2s(int x, int y, int new_x, int new_y) {
-        int dif_x=0;
-        int dif_y=0;
+        int dif_x, dif_y;
         for (int i = 0; i < block_2s.length; i++) {
             dif_x = block_2s[i][0] - x;
             dif_y = block_2s[i][1] - y;
@@ -853,8 +853,7 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, Ru
 
     //met à jour la postion des block3s
     private void UpdateBlock3s(int x, int y, int new_x, int new_y) {
-        int dif_x=0;
-        int dif_y=0;
+        int dif_x, dif_y;
         for (int i = 0; i < block_3s.length; i++) {
             dif_x = block_3s[i][0] - x;
             dif_y = block_3s[i][1] - y;
@@ -865,8 +864,7 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, Ru
 
     //met à jour la postion des block4s
     private void UpdateBlock4s(int x, int y, int new_x, int new_y) {
-        int dif_x=0;
-        int dif_y=0;
+        int dif_x, dif_y;
         for (int i = 0; i < block_4s.length; i++) {
             dif_x = block_4s[i][0] - x;
             dif_y = block_4s[i][1] - y;
@@ -876,8 +874,7 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, Ru
     }
     //met à jour la postion des block5s
     private void UpdateBlock5s(int x, int y, int new_x, int new_y) {
-        int dif_x=0;
-        int dif_y=0;
+        int dif_x, dif_y;
         for (int i = 0; i < block_5s.length; i++) {
             dif_x = block_5s[i][0] - x;
             dif_y = block_5s[i][1] - y;
@@ -887,8 +884,7 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, Ru
     }
     //met à jour la postion des block6s
     private void UpdateBlock6s(int x, int y, int new_x, int new_y) {
-        int dif_x=0;
-        int dif_y=0;
+        int dif_x, dif_y;
         for (int i = 0; i < block_6s.length; i++) {
             dif_x = block_6s[i][0] - x;
             dif_y = block_6s[i][1] - y;
@@ -933,6 +929,10 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, Ru
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             Log.i("test", "HIIIIIIIIIII");
             timerStop2 = true;
+            //pour le music
+            if(playing)
+                musicLoop = true;
+            //retourne le Menu
             Intent intent = new Intent(getContext(), MainActivity.class);
             /*his clears the activity stack and opens your main activity*/
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -976,6 +976,9 @@ public class GameView2 extends SurfaceView implements SurfaceHolder.Callback, Ru
                 hit++;
             }
         }
+
+        if (isWon())
+            hit ++;
 
         return true;
 

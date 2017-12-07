@@ -10,16 +10,16 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Toast;
 
 import java.util.Random;
 
 import static com.example.jiangning.cassetete.MainActivity.timer;
+import static com.example.jiangning.cassetete.MainActivity.musicLoop;
+import static com.example.jiangning.cassetete.MainActivity.playing;
 
 /**
  * Created by Jiangning on 20/11/2017.
@@ -554,8 +554,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
 
     //met à jour la postion des block1s
     private void UpdateBlock1s(int x, int y, int new_x, int new_y) {
-        int dif_x = 0;
-        int dif_y = 0;
+        int dif_x, dif_y;
         for (int i = 0; i < 2; i++) {
 
                 dif_x = block_1s[i][0] - x;
@@ -569,8 +568,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
 
     //met à jour  la postion des block2s
     private void UpdateBlock2s(int x, int y, int new_x, int new_y) {
-        int dif_x = 0;
-        int dif_y = 0;
+        int dif_x, dif_y;
         for (int i = 0; i < 1; i++) {
            /* if ((block_2s[i][0] == x) && (block_2s[i][1] == y)) {
                 block_2s[i][0] = new_x;
@@ -586,8 +584,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
 
     //met à jour la postion des block3s
     private void UpdateBlock3s(int x, int y, int new_x, int new_y) {
-        int dif_x = 0;
-        int dif_y = 0;
+        int dif_x, dif_y;
         for (int i = 0; i < 1; i++) {
                 dif_x = block_3s[i][0] - x;
                 dif_y = block_3s[i][1] - y;
@@ -644,10 +641,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
             xUp = (int) event.getX();
             yUp = (int) event.getY();
             UpdateBlocks(xInCard(xMove), yInCard(yMove), xInCard(xUp), yInCard(yUp));
-            if(IsBlock1(xInCard(xUp), yInCard(yUp)) || IsBlock2(xInCard(xUp), yInCard(yUp)) || IsBlock3(xInCard(xUp), yInCard(yUp))){
+            if(IsBlock1(xInCard(xUp), yInCard(yUp)) || IsBlock2(xInCard(xUp), yInCard(yUp))
+                    || IsBlock3(xInCard(xUp), yInCard(yUp))){
                 hit++;
             }
         }
+        if (isWon())
+            hit ++;
 
         return true;
 
@@ -659,6 +659,10 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             Log.i("test", "HIIIIIIIIIII");
             timerStop = true;
+            //pour le music
+            if(playing)
+                musicLoop = true;
+            //retourne le Menu
             Intent intent = new Intent(getContext(), MainActivity.class);
             /*his clears the activity stack and opens your main activity*/
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
