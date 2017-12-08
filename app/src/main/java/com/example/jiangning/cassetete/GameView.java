@@ -655,7 +655,9 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         }
         //si gagne, MotionEvant.Action_UP ca marche pas dans le jeu
         if (isWon()){
+            //affiche le dernier hit
             hit ++;
+            //sauvegarde la valeur de hit pour comparer les scores
             hitTmp = hit;
             hitretour = 0;
         }

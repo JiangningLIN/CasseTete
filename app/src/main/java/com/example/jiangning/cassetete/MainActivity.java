@@ -3,7 +3,6 @@ package com.example.jiangning.cassetete;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
-import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -37,6 +36,7 @@ public class MainActivity extends Activity {
     private boolean play  = false;
     private boolean pause = false;
 
+    //timer
     private MyCount mc0;
     private MyCount mc1;
     private MyCount mc2;
@@ -47,17 +47,17 @@ public class MainActivity extends Activity {
     private static final String TAG = "KeyDown";
     private Context context;
 
-    //un nombre de aléatoire
+    //un nombre aléatoire
     private Random random = new Random();
     private int valueRandom;
 
     //scores
-    public static int hitTmp = 0;
-    public int totalScore    = 2000;
-    public static int bestScore =0;
+    public static int hitTmp    = 0;
+    public int totalScore       = 2000;
+    public static int bestScore = 0;
 
-    //continue
-    Intent intent;
+    //TODO continue
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,11 +118,11 @@ public class MainActivity extends Activity {
                 }
             }
         });
-        //click button best Best Score
+        //click button Best Score
         bs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialogBestScore();
+                showDialogBestScores();
             }
         });
         //click button Random Game
@@ -162,6 +162,7 @@ public class MainActivity extends Activity {
             }
         });
 
+        //click button exit
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -175,7 +176,7 @@ public class MainActivity extends Activity {
 
     //fonction permettant de choisir GameView et accèder
     protected void setGame(int level,int reslayoutID, MyCount myCount ){
-        //evite la premier fois gagner pour timerWinStop egale true toujours et timer ne change pas
+        //initialisation le temps
         timerStarts();
         //charge le fichier main_.xml comme vue de l'activité
         setContentView(reslayoutID);
@@ -214,6 +215,7 @@ public class MainActivity extends Activity {
         /*Callback fired on regular interval.*/
         @Override
         public void onTick(long millisUntilFinished) {
+            //Le temps d'arrêt si gagné
             if(timerStop || timerStop1  || timerStop2  || timerStop3 ){
                 cancel(); /*Cancel the countdown*/
             }
@@ -246,7 +248,7 @@ public class MainActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
-    //activer/déactiver the music
+    //activer/déactiver le music
     protected void showDialogMusic(){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Choice");
@@ -321,8 +323,8 @@ public class MainActivity extends Activity {
         builder.create().show();
     }
 
-    //Dialog à propose
-    protected void showDialogBestScore() {
+    //Dialog BestScores
+    protected void showDialogBestScores() {
         //Creates an alert dialog that uses the default alert dialog theme
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle("Best Scores");
@@ -364,6 +366,7 @@ public class MainActivity extends Activity {
         //show the dialog
         builder.create().show();
     }
+
     //compare les scores
     public int getBestScores(){
         int scoretmp = totalScore - hitTmp*20;
@@ -372,7 +375,7 @@ public class MainActivity extends Activity {
         return bestScore;
     }
 
-    //pour commencer les temps
+    //fonction évitant du désorde temps si gagné
     public void timerStarts(){
         timerStop  = false;
         timerStop1 = false;

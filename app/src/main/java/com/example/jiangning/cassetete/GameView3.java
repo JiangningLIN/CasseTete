@@ -1038,7 +1038,7 @@ public class GameView3 extends SurfaceView implements SurfaceHolder.Callback, Ru
         return super.onKeyDown(keyCode, event);
     }
 
-    // fonction permettant de recuperer les evenements tactiles
+    // fonction permettant de recuperer les actions
     public boolean onTouche(int action, MotionEvent event) {
 
         Log.i("-> FCT <-", "66666666666666666!!");
@@ -1074,7 +1074,9 @@ public class GameView3 extends SurfaceView implements SurfaceHolder.Callback, Ru
         }
         //si gagne, MotionEvant.Action_UP ca marche pas dans le jeu
         if (isWon()){
+            //affiche le dernier hit
             hit ++;
+            //sauvegarde la valeur de hit pour comparer les scores
             hitTmp = hit;
         }
 
