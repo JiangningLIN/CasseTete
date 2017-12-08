@@ -375,7 +375,7 @@ public class MainActivity extends Activity {
         return bestScore;
     }
 
-    //fonction évitant du désorde temps si gagné
+    //fonction évitant du désordre temps si gagné
     public void timerStarts(){
         timerStop  = false;
         timerStop1 = false;
