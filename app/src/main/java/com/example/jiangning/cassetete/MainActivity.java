@@ -21,7 +21,9 @@ import static com.example.jiangning.cassetete.GameView.timerStop;
 import static com.example.jiangning.cassetete.GameView1.timerStop1;
 import static com.example.jiangning.cassetete.GameView2.timerStop2;
 import static com.example.jiangning.cassetete.GameView3.timerStop3;
-
+import static com.example.jiangning.cassetete.GameView.threadisalive;
+import static com.example.jiangning.cassetete.GameView.hitretour;
+import static com.example.jiangning.cassetete.GameView.hit;
 
 public class MainActivity extends Activity {
     private GameView  mGameView;
@@ -53,7 +55,9 @@ public class MainActivity extends Activity {
     public static int hitTmp = 0;
     public int totalScore    = 2000;
     public static int bestScore =0;
-    boolean firstScore = true;
+
+    //continue
+    Intent intent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,7 +107,17 @@ public class MainActivity extends Activity {
                 showDialogAbout();
             }
         });
-
+         //click button Continue
+        c.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (threadisalive) {
+                    Log.i("threadGameView", "True");
+                    hit = hitretour;
+                    setContentView(R.layout.main_game0);
+                }
+            }
+        });
         //click button best Best Score
         bs.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,16 +151,13 @@ public class MainActivity extends Activity {
                 setGame(1, R.layout.main_game1, mc1);
             }
         });
-
         b2.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-
                 setGame(2, R.layout.main_game2, mc2);
             }
         });
         b3.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-
                 setGame(3, R.layout.main_game3, mc3);
             }
         });
@@ -158,7 +169,6 @@ public class MainActivity extends Activity {
             }
         });
 
-        //getBestScores();
 
 
     }

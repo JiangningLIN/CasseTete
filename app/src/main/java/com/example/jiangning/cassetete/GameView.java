@@ -135,8 +135,13 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
     private boolean firstPaintBlock_3s =true;
 
     //un nombre de coups
-    int hit = 0;
+    public static int hit = 0;
 
+    public static boolean threadisalive = false;
+    public static int[][] cBlock1s= new int[1][1];
+    public static int[][] cBlock2s= new int[0][1];
+    public static int[][] cBlock3s= new int[0][1];
+    public static int hitretour =0;
 
     /**
      * The constructor called from the main JetBoy activity
@@ -171,6 +176,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         cv_thread = new Thread(this);
         // prise de focus pour gestion des touches
         setFocusable(true);
+
     }
 
     // chargement du niveau a partir du tableau de reference du niveau
@@ -595,7 +601,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
     }
 
     //met a jour la postion des blocks
-    private void UpdateBlocks(int x, int y, int new_x, int new_y) {
+    public  void UpdateBlocks(int x, int y, int new_x, int new_y) {
         if (!IsOut(x, y)) {
             if (IsBlock1(x,y) && IspossibleBlock1s(x, y,new_x,new_y)  && !Block1sIsOut(x,y,new_x,new_y))
                 UpdateBlock1s(x, y, new_x, new_y);
@@ -651,6 +657,7 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         if (isWon()){
             hit ++;
             hitTmp = hit;
+            hitretour = 0;
         }
 
 
@@ -666,6 +673,14 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
             timerStop = true;
             //pour le music
             if(playing){musicLoop = true;}
+
+            if(cv_thread.isAlive()){
+                threadisalive = true;
+            }
+            hitretour = hit;
+
+            //getblock1s();
+
             //retourne le Menu
             Intent intent = new Intent(getContext(), MainActivity.class);
             /*his clears the activity stack and opens your main activity*/
@@ -704,5 +719,20 @@ public class GameView extends SurfaceView implements SurfaceHolder.Callback, Run
         }
         Log.i("-> FCT <-", "onTouchEvent: " + event.getX());
         return super.onTouchEvent(event);
+    }
+
+    public void getblock1s(){
+        for (int i = 0; i < 2; i++) {
+            cBlock1s[i][1] = block_1s[i][1];
+            cBlock2s[i][0] = block_1s[i][0];
+        }
+        for (int i = 0; i < 1; i++) {
+            cBlock2s[i][1] = block_2s[i][1];
+            cBlock2s[i][0] = block_2s[i][0];
+        }
+        for (int i = 0; i < 1; i++) {
+            cBlock3s[i][1] = block_3s[i][1];
+            cBlock3s[i][0] = block_3s[i][0];
+        }
     }
 }
